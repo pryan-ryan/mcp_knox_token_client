@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mcp-knox-token-client = "server:main"
+mcp-knox-token-client = "server:run"
 
 [build-system]
 requires = ["setuptools>=61.0"]
