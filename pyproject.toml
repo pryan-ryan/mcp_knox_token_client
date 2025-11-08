@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mcp-knox-token-client = "mcp_knox_token_client:main"
+mcp-knox-token-client = "server:main"
 
 [build-system]
 requires = ["hatchling"]
