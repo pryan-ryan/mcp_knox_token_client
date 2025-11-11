@@ -28,6 +28,10 @@ async def list_tools() -> list[Tool]:
                         "type": "string",
                         "enum": ["GET", "POST", "PUT", "DELETE"],
                         "description": "HTTP method to use (default: GET)"
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": "JSON data to send in the request body (for POST/PUT requests)"
                     }
                 },
                 "required": ["url"]
@@ -43,19 +47,21 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     url = arguments["url"]
     bearer_token = arguments.get("bearer_token")
     method = arguments.get("method", "GET")
+    data = arguments.get("data")
 
     headers = {}
     if bearer_token:
         headers["Authorization"] = f"Bearer {bearer_token}"
 
     async with httpx.AsyncClient() as client:
-        response = await client.request(method, url, headers=headers)
+        response = await client.request(method, url, headers=headers, json=data)
         response.raise_for_status()
 
         return [TextContent(
             type="text",
             text=response.text
         )]
+
 
 async def main():
     # Your existing async main code
